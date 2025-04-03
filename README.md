@@ -35,6 +35,7 @@ smart-energy-ml-analysis-jsi/
 ├── results/
 │   └── predictions.csv                    # Predicted outputs on new data
 ├── README.md                              # This file
+```
 ---
 
 ## 🛠️ Tools & Technologies
