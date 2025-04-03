@@ -14,13 +14,26 @@ The project focuses on exploratory data analysis and classification for smart en
 
 ## 🔍 My Contributions
 
-✔️ Preprocessing of time series data  
-✔️ Visualization of energy consumption and environmental features  
-✔️ Experiments with machine learning classifiers
-✔️ Active learning pipeline prototyping  
-✔️ Performance evaluation using scikit-learn metrics  
-✔️ Drafting modular Jupyter notebooks for explainable ML
+To be completed. 
 
+---
+
+📊 Repository Structure
+
+smart-energy-ml-analysis-jsi/
+├── data/
+│   └── task1_security_classification/     # CSV datasets for classification
+├── models/
+│   └── task1_security_classification/     # Trained models (.pkl)
+├── notebooks/
+│   └── task1_security_classification/     # Jupyter notebooks for Task 1
+├── reports/
+│   └── task1_security_classification.md   # Markdown report for classification task
+├── scripts/
+│   └── predict_new_data.py                # Prediction script using trained model
+├── results/
+│   └── predictions.csv                    # Predicted outputs on new data
+├── README.md                              # This file
 ---
 
 ## 🛠️ Tools & Technologies
@@ -34,7 +47,7 @@ The project focuses on exploratory data analysis and classification for smart en
 
 ## 🧠 Learning Outcomes
 
-[TODO]
+To be completed. 
 
 ---
 
