@@ -20,20 +20,7 @@ To be completed.
 
 📊 Repository Structure
 
-smart-energy-ml-analysis-jsi/
-├── data/
-│   └── task1_security_classification/     # CSV datasets for classification
-├── models/
-│   └── task1_security_classification/     # Trained models (.pkl)
-├── notebooks/
-│   └── task1_security_classification/     # Jupyter notebooks for Task 1
-├── reports/
-│   └── task1_security_classification.md   # Markdown report for classification task
-├── scripts/
-│   └── predict_new_data.py                # Prediction script using trained model
-├── results/
-│   └── predictions.csv                    # Predicted outputs on new data
-├── README.md                              # This file
+<pre> \`\`\`text smart-energy-ml-analysis-jsi/ ├── data/ │ └── task1_security_classification/ # CSV datasets for classification ├── models/ │ └── task1_security_classification/ # Trained models (.pkl) ├── notebooks/ │ └── task1_security_classification/ # Jupyter notebooks for Task 1 ├── reports/ │ └── task1_security_classification.md # Markdown report for classification task ├── scripts/ │ └── predict_new_data.py # Prediction script using trained model ├── results/ │ └── predictions.csv # Predicted outputs on new data ├── README.md # This file \`\`\` </pre>
 ---
 
 ## 🛠️ Tools & Technologies
