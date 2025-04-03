@@ -18,7 +18,7 @@ To be completed.
 
 ---
 
-📊 Repository Structure
+## 📊 Repository Structure
 
 ```text
 smart-energy-ml-analysis-jsi/
