@@ -118,12 +118,12 @@ To better understand the dataset before applying machine learning models, we con
 
     These are `NaN` when the base-case simulation is already insecure (so N-1 simulation is skipped).  
 
-**![Missing values visualization](/smart-energy-ml-analysis-jsi/figures/eda/eda_missing_values.png)**
+**![Missing values visualization](../figures/eda/eda_missing_values.png)**
 
 - **Unique values per column**:  
   The number of unique values per feature varies, from just 1 (e.g., `min_bus_voltage_pu_basecase`) to over 8700 (e.g., `timestamp`). This shows which features are constant and which vary across simulations.
 
-**![Unique values plot](/smart-energy-ml-analysis-jsi/figures/eda/unique_values.png)**
+**![Unique values plot](../figures/eda/unique_values.png)**
 
   Example summary:
 
