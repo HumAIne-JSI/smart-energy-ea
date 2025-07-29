@@ -22,21 +22,13 @@ To be completed.
 
 ```text
 smart-energy-ml-analysis-jsi/
-├── data/
-│   └── task1_security_classification/    
+├── data/    
 ├── docs/                                  
-├── figures/
-│   └── task1_security_classification/      
-├── models/
-│   └── task1_security_classification/     
-├── notebooks/
-│   └── task1_security_classification/     
+├── figures/      
+├── models/     
+├── notebooks/  
 ├── reports/                               
-│   └── task1_security_classification/
-├── results/
-│   └── task1_security_classification/     
-├── scripts/
-│   └── task1_security_classification/     
+├── tables/  
 ├── README.md                              
 ```
 ---
