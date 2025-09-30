@@ -1,0 +1,27 @@
+# python
+__pycache__/
+*.pyc
+.venv/
+.env
+
+# notebooks & outputs
+.ipynb_checkpoints/
+*.ipynb_convert/
+*.nbconvert.ipynb
+
+# logs
+logs/
+
+# ignore experimental figure versions
+figures/v[1-8]/
+
+# ignore version folders in tables
+tables/v[1-9]/
+tables/v1[0-1]/
+
+# reports and old stuff
+reports/
+old/
+**/old/
+docs/
+TODO
