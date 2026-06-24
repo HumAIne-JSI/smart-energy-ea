@@ -34,7 +34,7 @@ install:
 
 # -------- Run services --------
 run-api:
-	$(PYTHON) -m uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+	cd retraining-api && PYTHONPATH=.:vendor $(PYTHON) -m uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
 
 run-dashboard:
 	$(PYTHON) -m streamlit run src/apps/streamlit_active_learning_dashboard.py
