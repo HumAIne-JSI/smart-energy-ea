@@ -1,0 +1,268 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" role="img" aria-labelledby="title desc">
+  <title id="title">Smart Energy Active Learning workflow for N-1 security assessment</title>
+  <desc id="desc">Scientific workflow diagram showing historical grid data, Digital Twin simulation labels, Random Forest training, uncertainty sampling, operator dashboard review, retraining, and continuous model improvement.</desc>
+  <defs>
+    <marker id="arrow-blue" markerWidth="14" markerHeight="14" refX="12" refY="7" orient="auto" markerUnits="strokeWidth">
+      <path d="M 0 0 L 14 7 L 0 14 z" fill="#2767b1"/>
+    </marker>
+    <marker id="arrow-green" markerWidth="14" markerHeight="14" refX="12" refY="7" orient="auto" markerUnits="strokeWidth">
+      <path d="M 0 0 L 14 7 L 0 14 z" fill="#22865a"/>
+    </marker>
+    <marker id="arrow-orange" markerWidth="14" markerHeight="14" refX="12" refY="7" orient="auto" markerUnits="strokeWidth">
+      <path d="M 0 0 L 14 7 L 0 14 z" fill="#d9781f"/>
+    </marker>
+    <style>
+      .bg { fill: #f7fafc; }
+      .gridline { stroke: #e8eef4; stroke-width: 1; }
+      .title { font: 700 34px Arial, Helvetica, sans-serif; fill: #14324f; letter-spacing: 0; }
+      .subtitle { font: 400 18px Arial, Helvetica, sans-serif; fill: #496276; letter-spacing: 0; }
+      .section { font: 700 14px Arial, Helvetica, sans-serif; fill: #5b7184; letter-spacing: 0.8px; }
+      .block-title { font: 700 20px Arial, Helvetica, sans-serif; fill: #16324a; letter-spacing: 0; }
+      .block-text { font: 400 15px Arial, Helvetica, sans-serif; fill: #476071; letter-spacing: 0; }
+      .small-text { font: 400 13px Arial, Helvetica, sans-serif; fill: #536b7c; letter-spacing: 0; }
+      .pill-text { font: 700 13px Arial, Helvetica, sans-serif; fill: #ffffff; letter-spacing: 0; }
+      .label { font: 700 14px Arial, Helvetica, sans-serif; fill: #315167; letter-spacing: 0; }
+      .card { fill: #ffffff; stroke: #d9e3ec; stroke-width: 2; rx: 8; }
+      .input { stroke: #8ab2dc; }
+      .sim { stroke: #4f95cf; }
+      .data { stroke: #67ae84; }
+      .model { stroke: #6aa96f; }
+      .al { stroke: #e6a048; }
+      .operator { stroke: #df8c3c; }
+      .shadow { fill: #dbe8f1; opacity: 0.35; }
+      .icon-blue { stroke: #2767b1; fill: none; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+      .icon-green { stroke: #22865a; fill: none; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+      .icon-orange { stroke: #d9781f; fill: none; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+      .blue-fill { fill: #e8f2fb; }
+      .green-fill { fill: #eaf7ef; }
+      .orange-fill { fill: #fff1df; }
+      .blue-arrow { stroke: #2767b1; stroke-width: 4; fill: none; marker-end: url(#arrow-blue); stroke-linecap: round; stroke-linejoin: round; }
+      .green-arrow { stroke: #22865a; stroke-width: 4; fill: none; marker-end: url(#arrow-green); stroke-linecap: round; stroke-linejoin: round; }
+      .orange-arrow { stroke: #d9781f; stroke-width: 4; fill: none; marker-end: url(#arrow-orange); stroke-linecap: round; stroke-linejoin: round; }
+      .dashed { stroke-dasharray: 9 8; }
+    </style>
+  </defs>
+
+  <rect class="bg" x="0" y="0" width="1600" height="900"/>
+  <g opacity="0.75">
+    <path class="gridline" d="M 0 120 H 1600"/>
+    <path class="gridline" d="M 0 300 H 1600"/>
+    <path class="gridline" d="M 0 480 H 1600"/>
+    <path class="gridline" d="M 0 660 H 1600"/>
+    <path class="gridline" d="M 180 0 V 900"/>
+    <path class="gridline" d="M 400 0 V 900"/>
+    <path class="gridline" d="M 620 0 V 900"/>
+    <path class="gridline" d="M 840 0 V 900"/>
+    <path class="gridline" d="M 1060 0 V 900"/>
+    <path class="gridline" d="M 1280 0 V 900"/>
+    <path class="gridline" d="M 1500 0 V 900"/>
+  </g>
+
+  <text class="title" x="80" y="72">Smart Energy Active Learning Workflow for N-1 Security Assessment</text>
+  <text class="subtitle" x="80" y="105">Digital Twin simulations provide ground-truth labels; Random Forest learns from them; Active Learning selects the next informative cases.</text>
+
+  <text class="section" x="88" y="166">DATA AND GROUND TRUTH</text>
+  <text class="section" x="702" y="166">MODEL AND ACTIVE LEARNING</text>
+  <text class="section" x="1186" y="166">OPERATOR-IN-THE-LOOP</text>
+
+  <!-- 1. Historical simulation data and grid operating points -->
+  <g transform="translate(80 205)">
+    <rect class="shadow" x="8" y="10" width="230" height="150" rx="8"/>
+    <rect class="card input" x="0" y="0" width="230" height="150"/>
+    <circle class="blue-fill" cx="38" cy="38" r="24"/>
+    <g transform="translate(18 18)">
+      <path class="icon-blue" d="M 4 30 H 40"/>
+      <path class="icon-blue" d="M 9 30 L 18 10 L 28 30 L 36 15"/>
+      <circle class="icon-blue" cx="9" cy="30" r="3"/>
+      <circle class="icon-blue" cx="18" cy="10" r="3"/>
+      <circle class="icon-blue" cx="28" cy="30" r="3"/>
+      <circle class="icon-blue" cx="36" cy="15" r="3"/>
+    </g>
+    <text class="block-title" x="72" y="37">Historical Data</text>
+    <text class="block-text" x="22" y="76">Grid operating points</text>
+    <text class="block-text" x="22" y="99">Simulation records</text>
+    <text class="small-text" x="22" y="126">Unlabeled or partially labeled pool</text>
+  </g>
+
+  <!-- 2. Digital Twin simulation engine -->
+  <g transform="translate(370 205)">
+    <rect class="shadow" x="8" y="10" width="260" height="150" rx="8"/>
+    <rect class="card sim" x="0" y="0" width="260" height="150"/>
+    <circle class="blue-fill" cx="40" cy="38" r="24"/>
+    <g transform="translate(18 18)">
+      <path class="icon-blue" d="M 8 30 H 42"/>
+      <path class="icon-blue" d="M 15 30 V 12 H 35 V 30"/>
+      <path class="icon-blue" d="M 12 12 H 38"/>
+      <path class="icon-blue" d="M 20 12 L 20 6 H 30 L 30 12"/>
+      <path class="icon-blue" d="M 6 36 C 14 31, 22 41, 30 36 C 36 32, 42 35, 46 38"/>
+    </g>
+    <text class="block-title" x="76" y="35">Digital Twin</text>
+    <text class="block-title" x="76" y="59">N-1 Simulation</text>
+    <text class="block-text" x="22" y="92">Contingency power-flow checks</text>
+    <text class="small-text" x="22" y="119">Produces true secure / insecure labels</text>
+  </g>
+
+  <!-- 3. Labeled dataset -->
+  <g transform="translate(700 205)">
+    <rect class="shadow" x="8" y="10" width="235" height="150" rx="8"/>
+    <rect class="card data" x="0" y="0" width="235" height="150"/>
+    <circle class="green-fill" cx="39" cy="38" r="24"/>
+    <g transform="translate(18 18)">
+      <path class="icon-green" d="M 8 8 H 38 V 40 H 8 z"/>
+      <path class="icon-green" d="M 14 17 H 32"/>
+      <path class="icon-green" d="M 14 25 H 32"/>
+      <path class="icon-green" d="M 14 33 H 26"/>
+      <path class="icon-green" d="M 8 16 H 38"/>
+    </g>
+    <text class="block-title" x="74" y="38">Labeled Dataset</text>
+    <rect x="22" y="76" width="72" height="26" rx="13" fill="#22865a"/>
+    <text class="pill-text" x="37" y="94">secure</text>
+    <rect x="106" y="76" width="82" height="26" rx="13" fill="#d9781f"/>
+    <text class="pill-text" x="122" y="94">insecure</text>
+    <text class="small-text" x="22" y="124">Training set grows after each round</text>
+  </g>
+
+  <!-- 4. Random Forest classifier -->
+  <g transform="translate(1015 205)">
+    <rect class="shadow" x="8" y="10" width="245" height="150" rx="8"/>
+    <rect class="card model" x="0" y="0" width="245" height="150"/>
+    <circle class="green-fill" cx="40" cy="38" r="24"/>
+    <g transform="translate(17 17)">
+      <path class="icon-green" d="M 24 42 V 22"/>
+      <path class="icon-green" d="M 14 42 V 27"/>
+      <path class="icon-green" d="M 34 42 V 27"/>
+      <circle class="icon-green" cx="24" cy="14" r="9"/>
+      <circle class="icon-green" cx="12" cy="24" r="8"/>
+      <circle class="icon-green" cx="36" cy="24" r="8"/>
+      <path class="icon-green" d="M 18 42 H 30"/>
+    </g>
+    <text class="block-title" x="76" y="37">Random Forest</text>
+    <text class="block-text" x="22" y="76">Binary classifier for</text>
+    <text class="block-text" x="22" y="99">N-1 security states</text>
+    <text class="small-text" x="22" y="126">Learns from Digital Twin labels</text>
+  </g>
+
+  <!-- 5. Unlabeled prediction pool -->
+  <g transform="translate(1015 455)">
+    <rect class="shadow" x="8" y="10" width="245" height="145" rx="8"/>
+    <rect class="card al" x="0" y="0" width="245" height="145"/>
+    <circle class="orange-fill" cx="40" cy="38" r="24"/>
+    <g transform="translate(18 18)">
+      <path class="icon-orange" d="M 8 14 H 40"/>
+      <path class="icon-orange" d="M 8 26 H 40"/>
+      <path class="icon-orange" d="M 8 38 H 28"/>
+      <path class="icon-orange" d="M 16 8 V 42"/>
+      <path class="icon-orange" d="M 30 8 V 42"/>
+    </g>
+    <text class="block-title" x="76" y="37">Predict on</text>
+    <text class="block-title" x="76" y="61">Unlabeled Pool</text>
+    <text class="block-text" x="22" y="94">Secure / insecure probabilities</text>
+    <text class="small-text" x="22" y="121">Confidence near decision boundary</text>
+  </g>
+
+  <!-- 6. Uncertainty sampling -->
+  <g transform="translate(700 455)">
+    <rect class="shadow" x="8" y="10" width="235" height="145" rx="8"/>
+    <rect class="card al" x="0" y="0" width="235" height="145"/>
+    <circle class="orange-fill" cx="40" cy="38" r="24"/>
+    <g transform="translate(17 17)">
+      <circle class="icon-orange" cx="20" cy="20" r="12"/>
+      <path class="icon-orange" d="M 29 29 L 42 42"/>
+      <path class="icon-orange" d="M 20 14 C 24 14, 26 17, 24 20 C 23 22, 20 22, 20 26"/>
+      <path class="icon-orange" d="M 20 32 H 20.2"/>
+    </g>
+    <text class="block-title" x="76" y="37">Uncertainty</text>
+    <text class="block-title" x="76" y="61">Sampling</text>
+    <text class="block-text" x="22" y="94">Select most informative cases</text>
+    <text class="small-text" x="22" y="121">Low margin / high uncertainty</text>
+  </g>
+
+  <!-- 7. Operator dashboard -->
+  <g transform="translate(370 455)">
+    <rect class="shadow" x="8" y="10" width="260" height="145" rx="8"/>
+    <rect class="card operator" x="0" y="0" width="260" height="145"/>
+    <circle class="orange-fill" cx="40" cy="38" r="24"/>
+    <g transform="translate(17 17)">
+      <circle class="icon-orange" cx="24" cy="13" r="8"/>
+      <path class="icon-orange" d="M 10 42 C 12 31, 18 25, 24 25 C 30 25, 36 31, 38 42"/>
+      <path class="icon-orange" d="M 5 36 H 43"/>
+      <path class="icon-orange" d="M 12 36 V 45 H 36 V 36"/>
+    </g>
+    <text class="block-title" x="76" y="37">Operator</text>
+    <text class="block-title" x="76" y="61">Dashboard</text>
+    <text class="block-text" x="22" y="94">Review and confirm candidates</text>
+    <text class="small-text" x="22" y="121">Operator steers selection, not labels</text>
+  </g>
+
+  <!-- 8. Retraining and updated model -->
+  <g transform="translate(80 455)">
+    <rect class="shadow" x="8" y="10" width="230" height="145" rx="8"/>
+    <rect class="card model" x="0" y="0" width="230" height="145"/>
+    <circle class="green-fill" cx="39" cy="38" r="24"/>
+    <g transform="translate(17 17)">
+      <path class="icon-green" d="M 8 24 C 8 13, 17 6, 27 8"/>
+      <path class="icon-green" d="M 27 8 L 21 3"/>
+      <path class="icon-green" d="M 27 8 L 21 13"/>
+      <path class="icon-green" d="M 40 24 C 40 35, 31 42, 21 40"/>
+      <path class="icon-green" d="M 21 40 L 27 45"/>
+      <path class="icon-green" d="M 21 40 L 27 35"/>
+      <path class="icon-green" d="M 18 24 H 30"/>
+    </g>
+    <text class="block-title" x="74" y="37">Retraining</text>
+    <text class="block-text" x="22" y="76">Append new labels</text>
+    <text class="block-text" x="22" y="99">Update Random Forest</text>
+    <text class="small-text" x="22" y="124">Improved model and metrics</text>
+  </g>
+
+  <!-- Main arrows -->
+  <path class="blue-arrow" d="M 310 280 H 354"/>
+  <text class="label" x="318" y="262">operating points</text>
+
+  <path class="green-arrow" d="M 630 280 H 684"/>
+  <text class="label" x="638" y="262">true labels</text>
+
+  <path class="green-arrow" d="M 935 280 H 999"/>
+  <text class="label" x="946" y="262">train</text>
+
+  <path class="orange-arrow" d="M 1138 355 V 439"/>
+  <text class="label" x="1162" y="408">predict</text>
+
+  <path class="orange-arrow" d="M 1015 528 H 951"/>
+  <text class="label" x="951" y="509">scores</text>
+
+  <path class="orange-arrow" d="M 700 528 H 646"/>
+  <text class="label" x="648" y="509">candidates</text>
+
+  <path class="blue-arrow" d="M 370 528 H 326"/>
+  <text class="label" x="315" y="509">selected cases</text>
+
+  <!-- Operator to Digital Twin simulation route -->
+  <path class="blue-arrow dashed" d="M 500 455 V 386 C 500 372, 500 364, 500 355"/>
+  <text class="label" x="522" y="407">send selected cases for simulation</text>
+
+  <!-- Retraining updates model -->
+  <path class="green-arrow" d="M 195 455 V 402 C 195 382, 212 365, 232 365 H 1095 C 1118 365, 1138 346, 1138 323"/>
+  <text class="label" x="458" y="391">retraining publishes updated Random Forest</text>
+
+  <!-- Continuous improvement loop -->
+  <path class="orange-arrow dashed" d="M 195 600 V 704 C 195 735, 220 760, 251 760 H 1140 C 1171 760, 1196 735, 1196 704 V 616"/>
+  <text class="label" x="566" y="793">continuous active learning loop: fewer simulations, better model focus</text>
+  <g transform="translate(760 719)">
+    <circle cx="0" cy="0" r="25" fill="#fff7eb" stroke="#f0c184" stroke-width="2"/>
+    <path class="icon-orange" d="M -11 -3 C -7 -13, 7 -16, 14 -7"/>
+    <path class="icon-orange" d="M 14 -7 L 15 -17"/>
+    <path class="icon-orange" d="M 14 -7 L 4 -7"/>
+    <path class="icon-orange" d="M 11 5 C 7 15, -7 18, -14 9"/>
+    <path class="icon-orange" d="M -14 9 L -15 19"/>
+    <path class="icon-orange" d="M -14 9 L -4 9"/>
+  </g>
+
+  <!-- Ground-truth callout -->
+  <g transform="translate(435 680)">
+    <rect x="0" y="0" width="730" height="92" rx="8" fill="#ffffff" stroke="#cddce8" stroke-width="2"/>
+    <rect x="0" y="0" width="10" height="92" rx="5" fill="#2767b1"/>
+    <text class="block-title" x="30" y="29">Ground truth source</text>
+    <text class="block-text" x="30" y="55">The Digital Twin assigns secure / insecure labels after N-1 contingency simulation.</text>
+    <text class="block-text" x="30" y="77">The operator reviews and confirms which uncertain cases enter the next simulation round.</text>
+  </g>
+</svg>

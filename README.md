@@ -71,15 +71,17 @@ Edit `.env` with the required credentials and endpoints.
 
 ```text
 smart-energy-ea/
-├── app/            # FastAPI retraining service
+├── retraining-api/ # FastAPI retraining service (deployed on Atena)
+│   └── app/        # API source: main.py, schemas, train, MinIO IO
 ├── src/            # Core logic, experiments, dashboards
 ├── notebooks/      # Exploratory and analysis notebooks
 ├── data/           # Input datasets & digital twin definitions
 ├── tables/         # Experiment outputs (CSV/XLSX)
 ├── figures/        # Generated plots
-├── reports/        # Interim reports and summaries
-├── docs/           # Project documentation
-├── README.md                              
+├── reports/        # Interim reports, presentations, and summaries
+├── docs/           # Project documentation (see docs/INDEX.md)
+├── powershell/     # Historical experiment runner scripts (Windows)
+└── README.md
 ```
 
 ---
@@ -87,13 +89,28 @@ smart-energy-ea/
 ## Where to look next
 
 - **Retraining API details**  
-  → `app/README.md`
+  → `retraining-api/app/README.md`
 
 - **Source code & experiment overview**  
   → `src/README.md`
 
 - **Detailed Active Learning pipeline explanation**  
-  → `docs/ACTIVE_LEARNING_GUIDE.md` (if present)
+  → `docs/active-learning-project-guide.md`
+
+- **Documentation index (all docs explained)**  
+  → `docs/INDEX.md`
+
+---
+
+## AI agent workflow
+
+This repository uses three files for AI-assisted development (Claude Code):
+
+- `project_tracker.md` — the single source of truth for current goals, active tasks, decisions, and open questions. **Read this before any significant code or paper edit.**
+- `AGENTS.md` — instructions for AI agents (role, coding rules, communication style).
+- `CLAUDE.md` — Claude Code-specific overrides and hooks.
+
+These files are gitignored by design so they remain local and editable without cluttering the shared history. A collaborator cloning the repo will not see them; ask the project owner for a copy if you need them.
 
 ---
 
