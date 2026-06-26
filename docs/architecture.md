@@ -85,7 +85,7 @@ flowchart TD
 |---|---|
 | Owner | IJS |
 | URL | `http://atena.ijs.si:5004` |
-| Docker image | `leskovecg/smart-energy-api:1.2.0` |
+| Docker image | `leskovecg/smart-energy-api:1.3.0` |
 | Ports | Host 5004 → Container 8000 |
 | Volume | `./data:/app/data` (base + appended CSV accessible in container) |
 | Base CSV | `/home/gleskovec/retraining-api/data/base/simulation_security_labels_n-1.csv` |
