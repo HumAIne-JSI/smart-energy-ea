@@ -30,7 +30,7 @@ sequenceDiagram
     Note over MinIO: al_training_dataset/appended_rows/...appended_rows_latest.csv
 
     UBITECH->>API: POST /retrain
-    Note over API: { appended_rows_key, al_strategy } — al_strategy pending Phase 1
+    Note over API: { latest_key, al_strategy } — al_strategy pending Phase 1
 
     API->>MinIO: Download appended rows delta
     API->>API: Merge with local base dataset

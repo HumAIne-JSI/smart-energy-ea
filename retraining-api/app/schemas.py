@@ -4,7 +4,7 @@ Pydantic schemas for the Smart Energy retraining API.
 
 from __future__ import annotations
 
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List
 
 from pydantic import BaseModel, Field
 
@@ -15,16 +15,12 @@ class RetrainRequest(BaseModel):
         default="smart-energy-results",
         description="Bucket used for appended rows input and for uploading artifacts.",
     )
-    appended_rows_key: str = Field(
+    latest_key: str = Field(
         default=(
             "al_training_dataset/appended_rows/"
             "simulation_security_labels_n-1_appended_rows_latest.csv"
         ),
         description="MinIO object key for appended rows latest CSV.",
-    )
-    latest_key: Optional[str] = Field(
-        default=None,
-        description="Legacy alias for appended_rows_key (kept for backward compatibility).",
     )
 
     # Output location

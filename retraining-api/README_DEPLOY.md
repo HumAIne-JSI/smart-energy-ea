@@ -64,14 +64,14 @@ curl -X POST http://localhost:8000/retrain \
   -H "X-API-Key: $API_KEY" \
   -H "Content-Type: application/json" \
   -d '{
-    "appended_rows_key": "al_training_dataset/appended_rows/simulation_security_labels_n-1_appended_rows_latest.csv"
+    "latest_key": "al_training_dataset/appended_rows/simulation_security_labels_n-1_appended_rows_latest.csv"
   }'
 ```
 
 **PowerShell (minimal):**
 ```powershell
 $body = @{
-  appended_rows_key = "al_training_dataset/appended_rows/simulation_security_labels_n-1_appended_rows_latest.csv"
+  latest_key = "al_training_dataset/appended_rows/simulation_security_labels_n-1_appended_rows_latest.csv"
 } | ConvertTo-Json
 
 $response = Invoke-WebRequest -Uri http://localhost:8000/retrain `
@@ -87,7 +87,7 @@ $response.Content
 ```powershell
 $body = @{
     results_bucket = "smart-energy-results"
-    appended_rows_key = "al_training_dataset/appended_rows/simulation_security_labels_n-1_appended_rows_latest.csv"
+    latest_key = "al_training_dataset/appended_rows/simulation_security_labels_n-1_appended_rows_latest.csv"
     output_prefix = "models/retraining_runs"
     n_estimators = 400
     random_state = 42
@@ -106,7 +106,7 @@ $response = Invoke-WebRequest -Uri http://localhost:8000/retrain `
 $response.Content
 ```
 
-**Note:** `appended_rows_key` has a default and normally does not need to be sent. Legacy `latest_key` is still accepted as a fallback alias.
+**Note:** `latest_key` has a default and normally does not need to be sent.
 
 ## Logs
 ```bash

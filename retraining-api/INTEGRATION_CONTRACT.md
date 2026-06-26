@@ -62,21 +62,19 @@ X-API-Key: <SHARED_SECRET>
 
 #### Minimal request body (recommended)
 
-Use `appended_rows_key` to point to the delta CSV (appended rows only) produced by the dashboard.
+Use `latest_key` to point to the delta CSV (appended rows only) produced by the dashboard.
 
 ```json
 {
-  "appended_rows_key": "al_training_dataset/appended_rows/simulation_security_labels_n-1_appended_rows_latest.csv"
+  "latest_key": "al_training_dataset/appended_rows/simulation_security_labels_n-1_appended_rows_latest.csv"
 }
 ```
-
-> **Legacy field warning:** `latest_key` exists as a fallback alias but is effectively broken. Because `appended_rows_key` has a non-empty default, a request body containing only `latest_key` will use the default `appended_rows_key` value and silently ignore the provided `latest_key`. Always send `appended_rows_key`.
 
 #### Full request body (optional configuration)
 ```json
 {
   "results_bucket": "smart-energy-results",
-  "appended_rows_key": "al_training_dataset/appended_rows/simulation_security_labels_n-1_appended_rows_latest.csv",
+  "latest_key": "al_training_dataset/appended_rows/simulation_security_labels_n-1_appended_rows_latest.csv",
   "output_prefix": "models/retraining_runs",
   "n_estimators": 400,
   "random_state": 42,

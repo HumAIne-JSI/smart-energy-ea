@@ -62,11 +62,11 @@ def retrain(req: RetrainRequest) -> RetrainResponse:
     """
     auth = get_humaine_auth()
 
-    appended_rows_key = req.appended_rows_key or req.latest_key
-    if not appended_rows_key:
+    latest_key = req.latest_key
+    if not latest_key:
         raise HTTPException(
             status_code=422,
-            detail="Missing input key. Provide 'appended_rows_key' (or legacy 'latest_key').",
+            detail="Missing input key. Provide 'latest_key'.",
         )
 
     if not BASE_DATASET_LOCAL_PATH.exists():
@@ -94,7 +94,7 @@ def retrain(req: RetrainRequest) -> RetrainResponse:
             download_object_to_path(
                 auth=auth,
                 bucket=req.results_bucket,
-                key=appended_rows_key,
+                key=latest_key,
                 local_path=str(APPENDED_ROWS_LOCAL_PATH),
             )
         except Exception as e:

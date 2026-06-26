@@ -260,7 +260,7 @@ Privzeti input iz MinIO:
 
 ```text
 results_bucket = smart-energy-results
-appended_rows_key = al_training_dataset/appended_rows/simulation_security_labels_n-1_appended_rows_latest.csv
+latest_key = al_training_dataset/appended_rows/simulation_security_labels_n-1_appended_rows_latest.csv
 ```
 
 Privzeta lokalna base datoteka v API kontejnerju:
@@ -298,7 +298,7 @@ Priporočen ekspliciten request body:
 ```json
 {
   "results_bucket": "smart-energy-results",
-  "appended_rows_key": "al_training_dataset/appended_rows/simulation_security_labels_n-1_appended_rows_latest.csv",
+  "latest_key": "al_training_dataset/appended_rows/simulation_security_labels_n-1_appended_rows_latest.csv",
   "output_prefix": "models/retraining_runs",
   "n_estimators": 400,
   "random_state": 42,

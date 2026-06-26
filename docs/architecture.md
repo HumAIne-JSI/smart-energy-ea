@@ -57,7 +57,7 @@ flowchart TD
 | Owner | UBITECH — Kostas Mylonas |
 | Role | Orchestrates: DT simulation → MinIO append → API retrain |
 | Calls our API | `http://atena.ijs.si:5004/retrain` |
-| Open question | Sends `appended_rows_key` or `latest_key` in payload? |
+| Open question | Does dashboard send `latest_key`? (pending Kostas confirmation) |
 
 ### Digital Twin
 

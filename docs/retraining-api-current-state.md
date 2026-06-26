@@ -114,7 +114,7 @@ export API_KEY="<REDACTED>"
 python -m uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
 ```
 
-The root `Makefile` contains `make run-api`, but it runs `python -m uvicorn app.main:app` from the repository root. Since this API lives under `retraining-api/app`, that command appears inconsistent with the current folder layout unless the working directory or `PYTHONPATH` is adjusted.
+The root `Makefile` `make run-api` target runs `cd retraining-api && PYTHONPATH=.:vendor python -m uvicorn app.main:app`. The working directory is changed to `retraining-api/` and `PYTHONPATH` includes both `retraining-api/` and `retraining-api/vendor/`, so the module path and vendored client resolve correctly.
 
 ## 3. Existing Endpoints
 
@@ -167,7 +167,7 @@ This uses default values from `RetrainRequest`, especially:
 ```json
 {
   "results_bucket": "smart-energy-results",
-  "appended_rows_key": "al_training_dataset/appended_rows/simulation_security_labels_n-1_appended_rows_latest.csv",
+  "latest_key": "al_training_dataset/appended_rows/simulation_security_labels_n-1_appended_rows_latest.csv",
   "output_prefix": "models/retraining_runs",
   "n_estimators": 400,
   "random_state": 42,
@@ -183,7 +183,7 @@ Recommended explicit request JSON:
 ```json
 {
   "results_bucket": "smart-energy-results",
-  "appended_rows_key": "al_training_dataset/appended_rows/simulation_security_labels_n-1_appended_rows_latest.csv",
+  "latest_key": "al_training_dataset/appended_rows/simulation_security_labels_n-1_appended_rows_latest.csv",
   "output_prefix": "models/retraining_runs",
   "n_estimators": 400,
   "random_state": 42,
@@ -229,7 +229,7 @@ curl -X POST http://localhost:8000/retrain \
   -H "X-API-Key: $API_KEY" \
   -H "Content-Type: application/json" \
   -d '{
-    "appended_rows_key": "al_training_dataset/appended_rows/simulation_security_labels_n-1_appended_rows_latest.csv"
+    "latest_key": "al_training_dataset/appended_rows/simulation_security_labels_n-1_appended_rows_latest.csv"
   }'
 ```
 
@@ -237,7 +237,7 @@ PowerShell:
 
 ```powershell
 $body = @{
-  appended_rows_key = "al_training_dataset/appended_rows/simulation_security_labels_n-1_appended_rows_latest.csv"
+  latest_key = "al_training_dataset/appended_rows/simulation_security_labels_n-1_appended_rows_latest.csv"
 } | ConvertTo-Json
 
 Invoke-WebRequest -Uri http://localhost:8000/retrain `
@@ -254,7 +254,7 @@ curl -X POST http://atena.ijs.si:5004/retrain \
   -H "X-API-Key: <REDACTED>" \
   -H "Content-Type: application/json" \
   -d '{
-    "appended_rows_key": "al_training_dataset/appended_rows/simulation_security_labels_n-1_appended_rows_latest.csv"
+    "latest_key": "al_training_dataset/appended_rows/simulation_security_labels_n-1_appended_rows_latest.csv"
   }'
 ```
 
@@ -270,7 +270,7 @@ Step-by-step from the current code:
 4. The code chooses the input key:
 
 ```python
-appended_rows_key = req.appended_rows_key or req.latest_key
+latest_key = req.latest_key
 ```
 
 5. It checks whether the local base dataset exists at `BASE_DATASET_LOCAL_PATH`, defaulting to:
@@ -320,8 +320,7 @@ Fields defined in `RetrainRequest`:
 | Field | Type | Default | Current behavior |
 |---|---:|---|---|
 | `results_bucket` | string | `smart-energy-results` | Used both for reading appended rows and uploading artifacts. |
-| `appended_rows_key` | string | `al_training_dataset/appended_rows/simulation_security_labels_n-1_appended_rows_latest.csv` | Primary MinIO object key for appended rows. |
-| `latest_key` | optional string | `null` | Intended as legacy alias, but see warning below. |
+| `latest_key` | string | `al_training_dataset/appended_rows/simulation_security_labels_n-1_appended_rows_latest.csv` | Primary MinIO object key for appended rows. |
 | `output_prefix` | string | `models/retraining_runs` | Prefix for uploaded run artifacts. |
 | `n_estimators` | integer >= 1 | `400` | Passed to `RandomForestClassifier`. |
 | `random_state` | integer | `42` | Used in train/test split and RF model. |
@@ -329,18 +328,6 @@ Fields defined in `RetrainRequest`:
 | `label_col` | string | `status` | Target column. |
 | `drop_feature_cols` | string list | `[]` | Dropped from features if present. |
 | `drop_latest_columns` | string list | `["created_at"]` | Dropped from the merged dataset if present. |
-
-### `latest_key` Warning
-
-Although `latest_key` is documented as a legacy alias, `appended_rows_key` has a non-empty default. Therefore a request like:
-
-```json
-{
-  "latest_key": "some/other/file.csv"
-}
-```
-
-will still use the default `appended_rows_key`, because `req.appended_rows_key` is already populated before `req.latest_key` is checked. To actually use a non-default input key, clients should send `appended_rows_key`.
 
 ### `al_strategy`
 
@@ -528,7 +515,7 @@ MODEL_OUTPUT_PREFIX=<value redacted in .env>
 The actual request defaults currently replace these environment values:
 
 - `results_bucket` defaults to `smart-energy-results`.
-- `appended_rows_key` defaults to `al_training_dataset/appended_rows/simulation_security_labels_n-1_appended_rows_latest.csv`.
+- `latest_key` defaults to `al_training_dataset/appended_rows/simulation_security_labels_n-1_appended_rows_latest.csv`.
 - `output_prefix` defaults to `models/retraining_runs`.
 
 ## 10. Not Implemented Yet
@@ -621,7 +608,7 @@ curl -X POST http://atena.ijs.si:5004/retrain \
   -H "X-API-Key: <REDACTED>" \
   -H "Content-Type: application/json" \
   -d '{
-    "appended_rows_key": "al_training_dataset/appended_rows/simulation_security_labels_n-1_appended_rows_latest.csv"
+    "latest_key": "al_training_dataset/appended_rows/simulation_security_labels_n-1_appended_rows_latest.csv"
   }'
 ```
 
@@ -659,10 +646,10 @@ Given the current Dockerfile/Compose, this file will not be present unless Atena
 
 2. Documentation drift between old snapshot flow and current delta flow.
    - `ARCHITECTURE_SKETCH.txt` and `INTEGRATION_CONTRACT.md` describe `latest_key` as a full dataset snapshot.
-   - Current code and `README_DEPLOY.md` use `appended_rows_key` as a delta/appended-rows file merged with local base data.
+   - Current code and `README_DEPLOY.md` use `latest_key` as a delta/appended-rows file merged with local base data.
 
 3. `latest_key` compatibility is likely broken or misleading.
-   - Because `appended_rows_key` has a default, a body containing only `latest_key` will not use that `latest_key`; it will use the default appended-rows key.
+   - Because `latest_key` has a default, a body containing only `latest_key` will not use that `latest_key`; it will use the default appended-rows key.
 
 4. `.env.example` contains variables not read by the code.
    - `RESULTS_BUCKET`, `LATEST_DATASET_KEY`, and `MODEL_OUTPUT_PREFIX` are present but unused by `main.py`/`schemas.py`.
@@ -702,7 +689,7 @@ or a full snapshot at:
 smart-energy-results/al_training_dataset/simulation_security_labels_n-1_latest.csv
 ```
 
-2. Which request body is the deployed dashboard actually sending to `/retrain`: `appended_rows_key`, `latest_key`, or an empty body?
+2. Which request body is the deployed dashboard actually sending to `/retrain`: `latest_key`, `latest_key`, or an empty body?
 
 3. Is the dashboard using `http://atena.ijs.si:5004`, `:8000`, or another routed URL?
 
