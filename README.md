@@ -78,9 +78,9 @@ smart-energy-ea/
 ├── data/           # Input datasets & digital twin definitions
 ├── tables/         # Experiment outputs (CSV/XLSX)
 ├── figures/        # Generated plots
-├── reports/        # Interim reports, presentations, and summaries
+├── reports/        # Historical interim reports and architecture notes. Not actively maintained.
 ├── docs/           # Project documentation (see docs/INDEX.md)
-├── powershell/     # Historical experiment runner scripts (Windows)
+├── powershell/     # Historical Windows experiment runner scripts. Paths reference old layout and may not work.
 └── README.md
 ```
 
