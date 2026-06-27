@@ -1,29 +1,8 @@
 # Retraining API Current State
 
-Last inspected: 2026-06-18
+Last updated: 2026-06-27
 
-Scope: `retraining-api/` was inspected in read-only mode, except for creating this report. Secrets from `.env` are intentionally redacted.
-
-## Evidence Base
-
-Inspected files:
-
-- `retraining-api/app/main.py`
-- `retraining-api/app/schemas.py`
-- `retraining-api/app/train.py`
-- `retraining-api/app/minio_io.py`
-- `retraining-api/vendor/minio_humaine_client/auth.py`
-- `retraining-api/Dockerfile`
-- `retraining-api/docker-compose.yml`
-- `retraining-api/app/README.md`
-- `retraining-api/README_DEPLOY.md`
-- `retraining-api/ARCHITECTURE_SKETCH.txt`
-- `retraining-api/INTEGRATION_CONTRACT.md`
-- `retraining-api/.env.example`
-- `retraining-api/.env` with values redacted
-- `retraining-api/retrain_payload.json`
-
-Important repository-state note: no `retraining-api/data/` directory is present in this checkout. The base CSV required by `/retrain` is therefore not available locally from the repository alone.
+Scope: Secrets from `.env` are redacted throughout.
 
 ## 1. What This API Does
 
