@@ -111,18 +111,6 @@ smart-energy-ea/
 
 ---
 
-## AI agent workflow
-
-This repository uses three files for AI-assisted development (Claude Code):
-
-- `project_tracker.md` — the single source of truth for current goals, active tasks, decisions, and open questions. **Read this before any significant code or paper edit.**
-- `AGENTS.md` — instructions for AI agents (role, coding rules, communication style).
-- `CLAUDE.md` — Claude Code-specific overrides and hooks.
-
-These files are gitignored by design so they remain local and editable without cluttering the shared history. A collaborator cloning the repo will not see them; ask the project owner for a copy if you need them.
-
----
-
 ## Related links
 
 - HumAIne Project: https://humaine-horizon.eu/

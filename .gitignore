@@ -1,39 +1,35 @@
-# python
+# Python
 __pycache__/
 *.pyc
 *.pyo
 .venv/
-.env
 venv-smart-energy/
 
-# notebooks & outputs
+# Jupyter
 .ipynb_checkpoints/
 *.ipynb_convert/
 *.nbconvert.ipynb
 
-# logs
-logs/
-
-# Models (generated)
-models/   
-
-# ignore tmp 
-tmp/
-
-# ignore experimental figure versions
+# Data and models (large files, gitignored by design)
+models/
 figures/v[1-8]/
-
-# ignore version folders in tables
 tables/v[1-9]/
 tables/v1[0-1]/
 
-# other
-TODO
+# Logs and temp files
+logs/
+tmp/
+
+# Environment and secrets
+.env
+
+# AI agent files (gitignored by design — local only)
 AGENTS.md
-project_tracker.md 
-
-for_me/
-
-.markdownlint.json
-
+project_tracker.md
 CLAUDE.md
+graphify-out
+
+# OS and editor
+TODO
+for_me/
+.markdownlint.json
