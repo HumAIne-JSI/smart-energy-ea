@@ -36,7 +36,14 @@ These live next to the code they describe, not in `docs/`.
 |---|---|
 | [archive/interim-report-no-minio.md](archive/interim-report-no-minio.md) | Pre-MinIO state; describes a workflow that no longer exists |
 | [archive/run-guide-no-minio.md](archive/run-guide-no-minio.md) | Pre-MinIO run instructions; superseded by `retraining-api/README_DEPLOY.md` |
-| [archive/AGENT_INTAKE_PROMPT.md](archive/AGENT_INTAKE_PROMPT.md) | Stub referencing a file that does not exist; superseded by Section 11 of `project_tracker.md` |
 | [archive/datasets-and-minio-guide-slo.md](archive/datasets-and-minio-guide-slo.md) | Slovenian; superseded by `smart-energy-data-description.md` and `retraining-api-current-state.md` |
 | [archive/day-ahead-load-and-security-explanation-slo.md](archive/day-ahead-load-and-security-explanation-slo.md) | Slovenian; superseded by `smart-energy-data-description.md` sections 13–15 |
 | [archive/power-grid-dataset-learning-guide-slo.md](archive/power-grid-dataset-learning-guide-slo.md) | Slovenian personal learning resource; superseded by `smart-energy-data-description.md` |
+
+- `archive/AGENT_INTAKE_PROMPT.md` — file removed; agent intake instructions are in Section 11 of `project_tracker.md` (gitignored).
+
+---
+
+## Historical / reference (`reports/`)
+
+- `reports/architecture.txt` — early architecture sketch, predates `retraining-api/ARCHITECTURE_SKETCH.txt`. Historical only.

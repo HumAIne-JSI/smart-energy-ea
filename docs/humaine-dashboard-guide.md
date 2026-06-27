@@ -1,5 +1,9 @@
 # HumAIne Dashboard - User Guide
 
+> **Scope:** Describes the Iteration 1 dashboard (deployed).
+> Iteration 2 UI changes (ranked candidate list, strategy selector)
+> are not yet reflected here.
+
 Welcome to the **HumAIne Dashboard**, an interactive platform for monitoring and managing power grid security with active learning capabilities.
 
 **Platform URL:** https://humaine-dashboard.euprojects.net/
