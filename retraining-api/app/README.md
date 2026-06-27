@@ -65,9 +65,11 @@ make run-api
 
 ### Manual run
 
-From the repository root:
+Run from the repository root.
+PYTHONPATH must include retraining-api/ and retraining-api/vendor/.
 ```bash
-uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+cd retraining-api && PYTHONPATH=.:vendor python -m uvicorn app.main:app \
+  --host 0.0.0.0 --port 8000 --reload
 ```
 
 ---

@@ -13,18 +13,18 @@ This guide explains what each script does, how they fit together, which function
 You have two complementary ways to run experiments:
 
 - **Online (with simulator calls)** — labels are obtained **on demand** by calling the digital‑twin simulator.  
-  *Entry point:* `run_simulated_active_learning.py` → uses `active_learning_with_simulator.py` → calls `simulator_interface.py`.
+  *Entry point:* `src/experiments/run_online_src/core/active_learning_loop_with_simulator.py` → uses `src/core/active_learning_loop_with_simulator.py` → calls `src/core/power_grid_simulator_interface.py`.
 
 - **Offline (no simulator calls)** — labels are taken from the CSV, used to benchmark Active Learning (AL) strategies quickly.  
-  *Entry point:* `al_experiment_code.py`.
+  *Entry point:* `src/experiments/run_offline_active_learning_grid.py`.
 
-For a UI, use **`streamlit_al_dashboard.py`** to run both modes from a dashboard and download results.
+For a UI, use **`src/apps/streamlit_active_learning_dashboard.py`** to run both modes from a dashboard and download results.
 
 ---
 
 ## 2) File‑by‑File Overview
 
-### `run_simulated_active_learning.py`
+### `src/experiments/run_online_src/core/active_learning_loop_with_simulator.py`
 End‑to‑end **online** run that splits data, runs AL with **simulator labels on demand**, and saves results (CSV + XLSX).  
 Key responsibilities:
 - **Time‑based split** when a `timestamp` exists: pool = past, validation = future (no overlap). Falls back to stratified split otherwise.
@@ -51,7 +51,7 @@ Key responsibilities:
 
 ---
 
-### `active_learning_with_simulator.py`
+### `src/core/active_learning_loop_with_simulator.py`
 Implements the **Active Learning loop** that can query the simulator **only for the samples you choose**.  
 Core ideas:
 - Train `RandomForestClassifier(class_weight="balanced")` on currently labeled pool.
@@ -83,7 +83,7 @@ run_active_learning(X_pool, y_pool, X_val, y_val, strategy,
 
 ---
 
-### `simulator_interface.py`
+### `src/core/power_grid_simulator_interface.py`
 Thin wrapper around the **pandapower** model of your grid (digital twin), with **robust path resolution** and **LRU‑cached** queries.
 
 **Key pieces**
@@ -102,7 +102,7 @@ Adds a stable cache key → **massively reduces repeated simulator work**.
 
 ---
 
-### `al_experiment_code.py`
+### `src/experiments/run_offline_active_learning_grid.py`
 Implements **offline** AL sweeps (fast baselines). Labels are read from CSV.  
 Highlights:
 - `load_dataset()` parses & sorts by `timestamp` (if present), maps `status` → binary, and **drops target/timestamp from features**.
@@ -116,7 +116,7 @@ Highlights:
 
 ---
 
-### `streamlit_al_dashboard.py`
+### `src/apps/streamlit_active_learning_dashboard.py`
 A simple **Streamlit** app to run either mode interactively and **download results**.
 
 - **Mode 1: Single Run (Simulator)** — performs a stratified split by the true labels, then calls the online AL loop.
@@ -124,7 +124,7 @@ A simple **Streamlit** app to run either mode interactively and **download resul
 
 **Run it**
 ```bash
-streamlit run streamlit_al_dashboard.py
+streamlit run src/apps/streamlit_active_learning_dashboard.py
 ```
 
 ---
@@ -144,7 +144,7 @@ Your CSV is expected to include:
 
 ### 4.1 Online (simulator) from CLI
 ```bash
-python run_simulated_active_learning.py \
+python src/experiments/run_online_src/core/active_learning_loop_with_simulator.py \
   --data "C:\path\to\simulation_security_labels_n-1.csv" \
   --strategy entropy \
   --init 100 \
@@ -158,13 +158,13 @@ python run_simulated_active_learning.py \
 
 ### 4.2 Offline baseline grid from CLI
 ```bash
-python al_experiment_code.py
+python src/experiments/run_offline_active_learning_grid.py
 ```
 *(Edit the `__main__` constants or call `run_experiment_grid()` from another script/notebook.)*
 
 ### 4.3 Streamlit dashboard
 ```bash
-streamlit run streamlit_al_dashboard.py
+streamlit run src/apps/streamlit_active_learning_dashboard.py
 ```
 Pick a mode in the sidebar, set parameters, click **Run**, and download CSV/XLSX.
 
