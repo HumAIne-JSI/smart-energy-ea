@@ -15,6 +15,15 @@ This folder contains the FastAPI service that retrains the Random Forest model u
   - `metrics.json`
   - under a versioned run folder (`models/retraining_runs/<run_id>/...`)
 
+## Code structure
+
+Source files live in `app/`:
+
+- `main.py` — FastAPI application, endpoint definitions, auth middleware
+- `train.py` — Random Forest training and evaluation logic
+- `minio_io.py` — MinIO I/O: download delta CSV, upload model and metrics
+- `schemas.py` — Pydantic request and response schemas
+
 ## Prerequisites
 - Docker + Docker Compose
 - Access to HumAIne MinIO / API (credentials)

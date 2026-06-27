@@ -97,6 +97,15 @@ smart-energy-ea/
 - **Detailed Active Learning pipeline explanation**  
   → `docs/active-learning-project-guide.md`
 
+- **System architecture & workflow** — component map and message flow  
+  → `docs/architecture.md` + `docs/sequence-current.md`
+
+- **Dataset description** — features, labels, data generation pipeline  
+  → `docs/smart-energy-data-description.md`
+
+- **API integration contract** (for UBITECH)  
+  → `retraining-api/INTEGRATION_CONTRACT.md`
+
 - **Documentation index (all docs explained)**  
   → `docs/INDEX.md`
 
