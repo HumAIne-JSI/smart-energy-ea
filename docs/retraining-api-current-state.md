@@ -432,8 +432,6 @@ MinIO/HumAIne API endpoints used by the wrapper:
   - `<HUMAINE_API_BASE_URL>/main_ops/download/<bucket>/<key>`
 - Upload: `<HUMAINE_API_BASE_URL>/main_ops/upload`
 
-Note: `RESULTS_BUCKET`, `LATEST_DATASET_KEY`, and `MODEL_OUTPUT_PREFIX` exist in `.env.example`, but the current FastAPI code does not read them. The corresponding values come from the request schema defaults or request body. `BASE_DATASET_LOCAL_PATH` and `APPENDED_ROWS_LOCAL_PATH` are read by the code but are not listed in `.env.example`.
-
 ## 8. Model Trained and Metrics Returned
 
 Model:
@@ -497,26 +495,14 @@ API_KEY=<REDACTED>
 
 If `API_KEY` is unset, `/retrain` is not protected by `X-API-Key`. For Atena, the `.env` file contains `API_KEY`, with value redacted here.
 
-Optional path overrides read by current code:
+Optional path overrides read by current code (listed in `.env.example`):
 
 ```text
 BASE_DATASET_LOCAL_PATH=<path to base CSV>
 APPENDED_ROWS_LOCAL_PATH=<path where appended CSV should be downloaded>
 ```
 
-Present in `.env.example` / `.env`, but not read by current code:
-
-```text
-RESULTS_BUCKET=<value redacted in .env>
-LATEST_DATASET_KEY=<value redacted in .env>
-MODEL_OUTPUT_PREFIX=<value redacted in .env>
-```
-
-The actual request defaults currently replace these environment values:
-
-- `results_bucket` defaults to `smart-energy-results`.
-- `latest_key` defaults to `al_training_dataset/appended_rows/simulation_security_labels_n-1_appended_rows_latest.csv`.
-- `output_prefix` defaults to `models/retraining_runs`.
+Both have sensible defaults (see `main.py` lines 24–34) and only need to be set to override the default paths inside the container.
 
 ## 10. Not Implemented Yet
 
@@ -651,29 +637,26 @@ Given the current Dockerfile/Compose, this file will not be present unless Atena
 3. `latest_key` compatibility is likely broken or misleading.
    - Because `latest_key` has a default, a body containing only `latest_key` will not use that `latest_key`; it will use the default appended-rows key.
 
-4. `.env.example` contains variables not read by the code.
-   - `RESULTS_BUCKET`, `LATEST_DATASET_KEY`, and `MODEL_OUTPUT_PREFIX` are present but unused by `main.py`/`schemas.py`.
-
-5. The external Atena port is unclear.
+4. The external Atena port is unclear.
    - Tracker says `http://atena.ijs.si:5004`.
    - Compose maps `8000:8000`.
 
-6. The trained model artifact is only the classifier.
+5. The trained model artifact is only the classifier.
    - There is no saved preprocessing pipeline.
    - There is no bundled label decoder beyond `label_mapping` in metrics.
 
-7. Data validation is minimal.
+6. Data validation is minimal.
    - The API concatenates base and appended data without checking schema compatibility, duplicate rows, timestamp consistency, label validity, or class coverage before train/test split.
 
-8. No server-side logging.
+7. No server-side logging.
    - Failures are returned as HTTP errors, but there is no structured logging in the API code.
 
-9. MinIO wrapper download path is defensive but uncertain.
+8. MinIO wrapper download path is defensive but uncertain.
    - It tries three download endpoint variants.
    - The comments suggest some uncertainty about which endpoint is correct.
 
-10. No implemented AL/XAI workflow in this service.
-    - The API currently retrains after samples already exist in MinIO. It does not choose or explain samples.
+9. No implemented AL/XAI workflow in this service.
+   - The API currently retrains after samples already exist in MinIO. It does not choose or explain samples.
 
 ### Questions for Costas
 
@@ -707,19 +690,15 @@ smart-energy-results/al_training_dataset/simulation_security_labels_n-1_latest.c
 
 1. Should the retraining API continue using local base dataset + appended delta, or return to full snapshot training from MinIO?
 
-2. Should `latest_key` be fixed as a true alias, removed, or kept only for legacy documentation?
+2. Should the model artifact include a preprocessing/metadata wrapper instead of only a bare Random Forest classifier?
 
-3. Should `RESULTS_BUCKET`, `LATEST_DATASET_KEY`, and `MODEL_OUTPUT_PREFIX` be wired into the application settings, or removed from `.env.example`?
+3. Should we add schema validation for appended rows before training?
 
-4. Should the model artifact include a preprocessing/metadata wrapper instead of only a bare Random Forest classifier?
+4. Should we add explicit metrics important for N-1 classification, especially false negatives, recall for the insecure class, precision for the insecure class, ROC-AUC, PR-AUC, or class distribution?
 
-5. Should we add schema validation for appended rows before training?
+5. Should the next backend milestone be a candidate-selection endpoint with `al_strategy`, or should the paper describe this as future work until Costas/Magda confirm frontend support?
 
-6. Should we add explicit metrics important for N-1 classification, especially false negatives, recall for the insecure class, precision for the insecure class, ROC-AUC, PR-AUC, or class distribution?
-
-7. Should the next backend milestone be a candidate-selection endpoint with `al_strategy`, or should the paper describe this as future work until Costas/Magda confirm frontend support?
-
-8. Should XAI for N-1 security classification be implemented now, or kept separate from day-ahead forecasting XAI until the dashboard contract is confirmed?
+6. Should XAI for N-1 security classification be implemented now, or kept separate from day-ahead forecasting XAI until the dashboard contract is confirmed?
 
 ## 13. Design Note: Local Base Dataset and MinIO Delta
 

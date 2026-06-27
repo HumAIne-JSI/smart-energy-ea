@@ -13,7 +13,7 @@ This folder contains the FastAPI service that retrains the Random Forest model u
 - Writes to MinIO:
   - `model.joblib`
   - `metrics.json`
-  - under a versioned run folder (`MODEL_OUTPUT_PREFIX/<run_id>/...`)
+  - under a versioned run folder (`models/retraining_runs/<run_id>/...`)
 
 ## Prerequisites
 - Docker + Docker Compose
