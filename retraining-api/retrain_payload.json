@@ -1,6 +1,6 @@
 {
-  "results_bucket": "smart-energy-results",
   "latest_key": "al_training_dataset/appended_rows/simulation_security_labels_n-1_appended_rows_latest.csv",
+  "results_bucket": "smart-energy-results",
   "output_prefix": "models/retraining_runs",
   "n_estimators": 400,
   "random_state": 42,
