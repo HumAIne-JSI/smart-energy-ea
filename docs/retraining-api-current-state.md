@@ -539,7 +539,7 @@ smart-energy-results/al_training_dataset/simulation_security_labels_n-1_latest.c
 
 3. Should we add schema validation for appended rows before training?
 
-4. Should we add explicit metrics important for N-1 classification, especially false negatives, recall for the insecure class, precision for the insecure class, ROC-AUC, PR-AUC, or class distribution?
+4. **Resolved (2026-06-28):** `precision_insecure`, `recall_insecure`, `f1_insecure`, and `roc_auc` are now returned in the `metrics` response object. `recall_insecure` is the most critical metric — a false negative (predicting secure when insecure) is the most dangerous error in N-1 classification. `pr_auc` was not added; `roc_auc` is sufficient for binary classification. See `INTEGRATION_CONTRACT.md` for the full response schema.
 
 5. Should the next backend milestone be a candidate-selection endpoint with `al_strategy`, or should the paper describe this as future work until Costas/Magda confirm frontend support?
 
