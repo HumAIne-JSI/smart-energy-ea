@@ -100,6 +100,10 @@ Use `latest_key` to point to the delta CSV (appended rows only) produced by the 
   "metrics": {
     "accuracy": 0.97,
     "f1_macro": 0.96,
+    "precision_insecure": 0.94,
+    "recall_insecure": 0.98,
+    "f1_insecure": 0.96,
+    "roc_auc": 0.99,
     "confusion_matrix": [[4921, 32], [21, 1756]],
     "label_mapping": {"insecure": 0, "secure": 1},
     "dataset_mode": "single_input_csv",
@@ -133,6 +137,10 @@ Use `latest_key` to point to the delta CSV (appended rows only) produced by the 
 |---|---|---|
 | `accuracy` | float | Overall accuracy on the held-out test split |
 | `f1_macro` | float | Macro-averaged F1 score on the held-out test split |
+| `precision_insecure` | float\|null | Precision for the `insecure` class on the held-out test split; `null` if class absent from test split |
+| `recall_insecure` | float\|null | Recall for the `insecure` class; a false negative (predicting secure when insecure) is the critical error in N-1 security classification; `null` if class absent |
+| `f1_insecure` | float\|null | F1 score for the `insecure` class on the held-out test split; `null` if class absent |
+| `roc_auc` | float\|null | Area under the ROC curve for `insecure` vs `secure`; `null` if only one class present in test split |
 | `confusion_matrix` | array[[int]] | Confusion matrix; rows are true labels, columns are predicted labels |
 | `label_mapping` | object | Maps each string class label to its integer index (e.g. `{"insecure": 0, "secure": 1}`) |
 | `n_rows_all` | int | Total rows in the merged training dataset |

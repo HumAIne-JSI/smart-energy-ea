@@ -16,7 +16,10 @@ import pandas as pd
 
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import train_test_split
-from sklearn.metrics import accuracy_score, f1_score, confusion_matrix
+from sklearn.metrics import (
+    accuracy_score, f1_score, confusion_matrix,
+    precision_score, recall_score, roc_auc_score,
+)
 
 
 @dataclass
@@ -99,9 +102,36 @@ def train_rf_and_save(
 
     y_pred = clf.predict(X_test)
 
+    insecure_label = mapping.get("insecure")
+
+    if insecure_label is not None and len(set(y_test)) > 1:
+        insecure_idx = list(clf.classes_).index(insecure_label)
+        y_prob_insecure = clf.predict_proba(X_test)[:, insecure_idx]
+        precision_insecure = precision_score(
+            y_test, y_pred, pos_label=insecure_label, zero_division=0
+        )
+        recall_insecure = recall_score(
+            y_test, y_pred, pos_label=insecure_label, zero_division=0
+        )
+        f1_insecure = f1_score(
+            y_test, y_pred, pos_label=insecure_label, zero_division=0
+        )
+        roc_auc = roc_auc_score(
+            (y_test == insecure_label).astype(int), y_prob_insecure
+        )
+    else:
+        precision_insecure = None
+        recall_insecure = None
+        f1_insecure = None
+        roc_auc = None
+
     metrics: Dict[str, Any] = {
         "accuracy": float(accuracy_score(y_test, y_pred)),
         "f1_macro": float(f1_score(y_test, y_pred, average="macro")),
+        "precision_insecure": float(precision_insecure) if precision_insecure is not None else None,
+        "recall_insecure": float(recall_insecure) if recall_insecure is not None else None,
+        "f1_insecure": float(f1_insecure) if f1_insecure is not None else None,
+        "roc_auc": float(roc_auc) if roc_auc is not None else None,
         "confusion_matrix": confusion_matrix(y_test, y_pred).tolist(),
         "label_mapping": mapping,
         "n_estimators": int(n_estimators),
