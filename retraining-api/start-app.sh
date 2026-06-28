@@ -4,7 +4,7 @@ set -euo pipefail
 SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
 ENV_FILE="$SCRIPT_DIR/.env"
 
-IMAGE="leskovecg/smart-energy-api:1.4.0"
+IMAGE="leskovecg/smart-energy-api:1.5.0"
 NAME="retraining-api"
 HOST_PORT="5004"
 CONTAINER_PORT="8000"
