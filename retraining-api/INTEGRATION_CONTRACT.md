@@ -105,7 +105,7 @@ Use `latest_key` to point to the delta CSV (appended rows only) produced by the 
     "dataset_mode": "single_input_csv",
     "n_rows_all": 8773,
     "n_rows_latest": 2,
-    "n_features": 24,
+    "n_features": 272,
     "n_estimators": 400,
     "random_state": 42,
     "test_size": 0.2
