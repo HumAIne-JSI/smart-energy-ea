@@ -413,23 +413,8 @@ Training behavior:
 - Trains a Random Forest classifier.
 - Saves only the classifier object with `joblib.dump()`.
 
-Returned/written metrics:
-
-```json
-{
-  "accuracy": 0.0,
-  "f1_macro": 0.0,
-  "confusion_matrix": [],
-  "label_mapping": {},
-  "n_estimators": 400,
-  "random_state": 42,
-  "test_size": 0.2,
-  "n_rows_all": 0,
-  "n_rows_latest": 0,
-  "n_features": 0,
-  "dataset_mode": "single_input_csv"
-}
-```
+> Response schema: see `retraining-api/INTEGRATION_CONTRACT.md`
+> — Successful response example and Response fields sections.
 
 The model artifact does not include an explicit preprocessing pipeline or label-decoding wrapper. The metrics file includes `label_mapping`, but a downstream prediction service would need to handle feature preparation and label interpretation carefully.
 

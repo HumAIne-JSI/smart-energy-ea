@@ -100,6 +100,8 @@ Use `latest_key` to point to the delta CSV (appended rows only) produced by the 
   "metrics": {
     "accuracy": 0.97,
     "f1_macro": 0.96,
+    "confusion_matrix": [[4921, 32], [21, 1756]],
+    "label_mapping": {"insecure": 0, "secure": 1},
     "dataset_mode": "single_input_csv",
     "n_rows_all": 8773,
     "n_rows_latest": 2,
@@ -113,10 +115,33 @@ Use `latest_key` to point to the delta CSV (appended rows only) produced by the 
 
 `dataset_rows_latest` and `metrics.n_rows_latest` reflect the number of rows in the appended delta CSV, not the total dataset size.
 
-### Response fields of interest for the dashboard
-- **model_object** – MinIO path to the newly trained model artifact
-- **metrics_object** – MinIO path to the metrics JSON
-- **metrics** – training and evaluation statistics to be visualized in the dashboard
+### Response fields
+
+| Field | Type | Description |
+|---|---|---|
+| `ok` | bool | `true` if retraining completed without error |
+| `message` | str | Human-readable status message |
+| `dataset_rows` | int | Total rows in the merged (base + delta) dataset used for training |
+| `dataset_rows_latest` | int | Rows contributed by the appended delta CSV |
+| `model_object` | str | Full MinIO path to the uploaded `model.joblib` artifact |
+| `metrics_object` | str | Full MinIO path to the uploaded `metrics.json` artifact |
+| `metrics` | object | Training and evaluation statistics; see sub-fields below |
+
+#### `metrics` sub-fields
+
+| Sub-field | Type | Description |
+|---|---|---|
+| `accuracy` | float | Overall accuracy on the held-out test split |
+| `f1_macro` | float | Macro-averaged F1 score on the held-out test split |
+| `confusion_matrix` | array[[int]] | Confusion matrix; rows are true labels, columns are predicted labels |
+| `label_mapping` | object | Maps each string class label to its integer index (e.g. `{"insecure": 0, "secure": 1}`) |
+| `n_rows_all` | int | Total rows in the merged training dataset |
+| `n_rows_latest` | int | Rows from the appended delta CSV (same as `dataset_rows_latest`) |
+| `n_features` | int | Number of feature columns used during training |
+| `n_estimators` | int | Number of trees in the Random Forest |
+| `random_state` | int | Random seed used for reproducibility |
+| `test_size` | float | Fraction of data reserved for the test split |
+| `dataset_mode` | str | Training mode identifier (always `"single_input_csv"` currently) |
 
 ---
 
