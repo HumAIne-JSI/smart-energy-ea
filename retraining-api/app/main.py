@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import os
+import sys
 import json
 import uuid
 import tempfile
@@ -142,6 +143,37 @@ def retrain(req: RetrainRequest) -> RetrainResponse:
             upload_path_as_object(auth, req.results_bucket, metrics_key, artifacts.metrics_path)
         except Exception as e:
             raise HTTPException(status_code=500, detail=f"Upload to MinIO failed: {e}")
+
+        # 5) Append run log entry (non-fatal — write errors go to stderr only).
+        log_path = APP_ROOT / "data" / "retrain_log.jsonl"
+        log_entry = {
+            "run_id": run_id,
+            "called_at": datetime.now(timezone.utc).isoformat(),
+            "request": {
+                "latest_key": req.latest_key,
+                "results_bucket": req.results_bucket,
+                "output_prefix": req.output_prefix,
+                "n_estimators": req.n_estimators,
+                "random_state": req.random_state,
+                "test_size": req.test_size,
+                "label_col": req.label_col,
+                "drop_feature_cols": req.drop_feature_cols,
+                "drop_latest_columns": req.drop_latest_columns,
+            },
+            "response": {
+                "ok": True,
+                "dataset_rows": artifacts.n_rows_all,
+                "dataset_rows_latest": appended_rows_count,
+                "model_object": f"{req.results_bucket}/{model_key}",
+                "metrics_object": f"{req.results_bucket}/{metrics_key}",
+            },
+            "metrics": artifacts.metrics,
+        }
+        try:
+            with open(log_path, "a", encoding="utf-8") as lf:
+                lf.write(json.dumps(log_entry) + "\n")
+        except Exception as log_exc:
+            print(f"[retrain] run log write failed: {log_exc}", file=sys.stderr)
 
         return RetrainResponse(
             ok=True,
