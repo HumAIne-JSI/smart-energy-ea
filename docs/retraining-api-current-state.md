@@ -267,7 +267,8 @@ retraining-api/data/appended/simulation_security_labels_n-1_appended_rows_latest
 14. It trains the model using `train_rf_and_save()`.
 15. It overwrites `metrics["n_rows_latest"]` so it means appended-row count, not merged-row count.
 16. It uploads `model.joblib` and `metrics.json` to MinIO.
-17. It returns paths and metrics in the HTTP response.
+17. It appends a JSON log entry to `data/retrain_log.jsonl` (relative to the Docker volume root). Each entry records the run_id, timestamp, full request parameters, response summary, and the complete metrics dict. Write errors are non-fatal — they are logged to stderr only and do not affect the API response.
+18. It returns paths and metrics in the HTTP response.
 
 ## 5. Fields Accepted by `/retrain`
 
@@ -460,7 +461,7 @@ Not implemented in `retraining-api/app`:
 - Domain-aware or risk-aware selection using grid details.
 - Per-sample grid details such as overloaded line ID, bus voltage violation, contingency ID, affected grid element, or affected segment.
 - Model registry metadata beyond `model.joblib` and `metrics.json`.
-- Monitoring, tracing, structured logging, or request audit logging.
+- Monitoring, tracing, or middleware-level structured logging. Basic per-run logging for successful `/retrain` calls is implemented — see Section 15.
 - CI/CD or deployment automation beyond Docker Compose.
 
 The architecture sketch says the dashboard implements active-learning strategy selection, but this is not implemented in the retraining API.
@@ -493,8 +494,8 @@ The architecture sketch says the dashboard implements active-learning strategy s
 6. Data validation is minimal.
    - The API concatenates base and appended data without checking schema compatibility, duplicate rows, timestamp consistency, label validity, or class coverage before train/test split.
 
-7. No server-side logging.
-   - Failures are returned as HTTP errors, but there is no structured logging in the API code.
+7. Per-run logging is implemented for successful calls (`data/retrain_log.jsonl`).
+   Error-level logging is still unstructured — failures are returned as HTTP errors but not written to a log file.
 
 8. MinIO wrapper download path is defensive but uncertain.
    - It tries three download endpoint variants.
@@ -563,4 +564,35 @@ Before triggering `/retrain`, verify:
 - [ ] Metadata columns such as `created_at` are listed in `drop_latest_columns` and will not enter model features.
 - [ ] Merged dataset has enough rows of both classes for a stratified train/test split.
 - [ ] After retraining, both `model.joblib` and `metrics.json` are uploaded to MinIO under the expected run path.
+
+## 15. Local Run Log
+
+After each successful `/retrain` call, one JSON line is appended to:
+
+```text
+data/retrain_log.jsonl
+```
+
+This file lives inside the Docker volume mount (`data/`) and persists across container restarts.
+
+Each log entry contains:
+
+- `run_id` — unique run identifier (`YYYYMMDDTHHMMSSZ_<8 hex chars>`)
+- `called_at` — ISO 8601 UTC timestamp of when the entry was written
+- `request` — full request parameters (`latest_key`, `results_bucket`, `output_prefix`, `n_estimators`, `random_state`, `test_size`, `label_col`, `drop_feature_cols`, `drop_latest_columns`)
+- `response` — response summary (`ok`, `dataset_rows`, `dataset_rows_latest`, `model_object`, `metrics_object`)
+- `metrics` — complete metrics dict (all fields returned in the API response `metrics` object)
+
+Write errors are non-fatal: a log write failure is printed to stderr only and does not cause the `/retrain` endpoint to return an error.
+
+View all runs in a readable format (from `retraining-api/` on Atena):
+
+```bash
+cat data/retrain_log.jsonl | python3 -c "
+import sys, json
+for line in sys.stdin:
+    r = json.loads(line)
+    print(f\"{r['called_at']} | acc={r['metrics']['accuracy']:.3f} | recall_ins={r['metrics'].get('recall_insecure','?')} | rows={r['metrics']['n_rows_all']} | latest={r['metrics']['n_rows_latest']}\")
+"
+```
 

@@ -127,6 +127,22 @@ docker logs -f retraining-api
 docker exec retraining-api ls -lh /app/data/base/
 ```
 
+## View run log
+
+Each successful `/retrain` call appends a structured JSON line to
+`data/retrain_log.jsonl` inside the Docker volume (persists across
+container restarts). View all runs in a readable format from
+`retraining-api/` on Atena:
+
+```bash
+cat data/retrain_log.jsonl | python3 -c "
+import sys, json
+for line in sys.stdin:
+    r = json.loads(line)
+    print(f\"{r['called_at']} | acc={r['metrics']['accuracy']:.3f} | recall_ins={r['metrics'].get('recall_insecure','?')} | rows={r['metrics']['n_rows_all']} | latest={r['metrics']['n_rows_latest']}\")
+"
+```
+
 ## Stop
 ```bash
 docker compose down

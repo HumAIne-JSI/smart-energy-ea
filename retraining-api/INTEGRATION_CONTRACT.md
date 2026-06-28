@@ -190,6 +190,7 @@ Training always uses: `merged = base_dataset + appended_rows_delta`.
 - Atena exposes the API on host port **5004**; the container itself binds to port 8000
 - **The API is not fully stateless**: it requires the base dataset CSV to be present inside the container. Without it, `/retrain` returns 500.
 - Trained model artifacts (`model.joblib`, `metrics.json`) are uploaded to MinIO after each retraining run under a versioned run folder
+- Each successful `/retrain` call appends a structured log entry to `data/retrain_log.jsonl` on the Atena server (inside the Docker volume). This log is for internal monitoring only and is not exposed via the API.
 
 ---
 
