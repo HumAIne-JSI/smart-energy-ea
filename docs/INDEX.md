@@ -8,8 +8,7 @@ This file maps every document in `docs/` to its purpose and the situation in whi
 
 | File | What it covers | Read when |
 |---|---|---|
-| [architecture.md](architecture.md) | System architecture overview — components, connections, MinIO paths (Mermaid flowchart) | You need a visual map of all deployed components and their connections |
-| [sequence-current.md](sequence-current.md) | Iteration 1 sequence diagram — full operator-to-retrain workflow (Mermaid) | You need to trace the exact message flow from operator action to retrain completion |
+| [architecture.md](architecture.md) | System architecture overview — components, connections, MinIO paths (Mermaid flowchart) + Iteration 1 sequence diagram (now embedded here) | You need a visual map of all deployed components, their connections, or the message flow |
 | [iteration-2-proposal.md](iteration-2-proposal.md) | Iteration 2 proposal: backend ranking of 24 day-ahead samples; proposed workflow, endpoint contract draft, open questions for Kostas | You are designing or extending the Iteration 2 AL ranking workflow |
 | [retraining-api-current-state.md](retraining-api-current-state.md) | Snapshot of the deployed `retraining-api/` as of Jun 2026: endpoints, MinIO keys, payload schema, known limitations | You need to understand or extend the deployed API |
 | [smart-energy-data-description.md](smart-energy-data-description.md) | Feature-by-feature description of the N-1 security dataset (columns, units, label definition) | You need to understand what the model is trained on or write the dataset section of the paper |

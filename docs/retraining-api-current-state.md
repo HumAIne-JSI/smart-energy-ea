@@ -173,33 +173,10 @@ Recommended explicit request JSON:
 }
 ```
 
-Response JSON shape:
-
-```json
-{
-  "ok": true,
-  "message": "Retraining completed.",
-  "dataset_rows": 0,
-  "dataset_rows_latest": 0,
-  "model_object": "smart-energy-results/models/retraining_runs/<run_id>/model.joblib",
-  "metrics_object": "smart-energy-results/models/retraining_runs/<run_id>/metrics.json",
-  "metrics": {
-    "accuracy": 0.0,
-    "f1_macro": 0.0,
-    "confusion_matrix": [],
-    "label_mapping": {},
-    "n_estimators": 400,
-    "random_state": 42,
-    "test_size": 0.2,
-    "n_rows_all": 0,
-    "n_rows_latest": 0,
-    "n_features": 0,
-    "dataset_mode": "single_input_csv"
-  }
-}
-```
-
-The numeric values above are shape examples only. Real values depend on the dataset and train/test split.
+> **Response schema:** see `retraining-api/INTEGRATION_CONTRACT.md`
+> — Successful response example section.
+> `INTEGRATION_CONTRACT.md` is the single source of truth for
+> the request and response contract.
 
 Example curl:
 
@@ -502,102 +479,6 @@ Not implemented in `retraining-api/app`:
 - CI/CD or deployment automation beyond Docker Compose.
 
 The architecture sketch says the dashboard implements active-learning strategy selection, but this is not implemented in the retraining API.
-
-## 11. Commands to Test Locally and on Atena
-
-### Local Docker smoke test
-
-From `retraining-api/`:
-
-```bash
-docker compose up -d --build
-curl http://localhost:8000/health
-docker logs -f retraining-api
-```
-
-### Local retrain test
-
-Prerequisites:
-
-- `.env` exists with HumAIne credentials and `API_KEY`.
-- Base CSV exists at `retraining-api/data/base/simulation_security_labels_n-1.csv`, or `BASE_DATASET_LOCAL_PATH` points to it.
-- Appended rows object exists in MinIO.
-
-Command:
-
-```bash
-curl -X POST http://localhost:8000/retrain \
-  -H "X-API-Key: $API_KEY" \
-  -H "Content-Type: application/json" \
-  -d @retrain_payload.json
-```
-
-PowerShell:
-
-```powershell
-$env:API_KEY = "<REDACTED>"
-Invoke-WebRequest -Uri http://localhost:8000/health
-Invoke-WebRequest -Uri http://localhost:8000/retrain `
-  -Method POST `
-  -Headers @{"X-API-Key" = $env:API_KEY} `
-  -ContentType "application/json" `
-  -InFile retrain_payload.json
-```
-
-### Atena health test
-
-Tracker says the deployed API is:
-
-```text
-http://atena.ijs.si:5004
-```
-
-Health:
-
-```bash
-curl http://atena.ijs.si:5004/health
-```
-
-If the service is instead exposed directly from the checked-in compose mapping:
-
-```bash
-curl http://atena.ijs.si:8000/health
-```
-
-Unknown / needs confirmation
-
-### Atena retrain test
-
-```bash
-curl -X POST http://atena.ijs.si:5004/retrain \
-  -H "X-API-Key: <REDACTED>" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "latest_key": "al_training_dataset/appended_rows/simulation_security_labels_n-1_appended_rows_latest.csv"
-  }'
-```
-
-If running on Atena via SSH inside `retraining-api/`:
-
-```bash
-docker compose ps
-docker logs -f retraining-api
-curl http://localhost:8000/health
-```
-
-To check whether the required base dataset exists inside the running container:
-
-```bash
-docker exec retraining-api ls -lh /app/data/base/
-```
-
-Expected file:
-
-```text
-/app/data/base/simulation_security_labels_n-1.csv
-```
-
-Given the current Dockerfile/Compose, this file will not be present unless Atena has custom deployment steps.
 
 ## 12. Main Risks, Unclear Points, and Questions for Costas/Klemen
 

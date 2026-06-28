@@ -122,6 +122,11 @@ $response.Content
 docker logs -f retraining-api
 ```
 
+## Verify data inside container
+```bash
+docker exec retraining-api ls -lh /app/data/base/
+```
+
 ## Stop
 ```bash
 docker compose down

@@ -52,7 +52,7 @@ This endpoint does not require authentication.
 
 Triggers retraining of the Random Forest model by downloading the latest **appended rows (delta) CSV** from MinIO and merging it with a **local base dataset** stored on disk inside the container.
 
-> **Important:** This API is not fully stateless. It requires the base dataset CSV to be provisioned inside the container at `data/base/simulation_security_labels_n-1.csv` (or at the path configured by `BASE_DATASET_LOCAL_PATH`). See deployment notes below.
+> **Important:** This API is not fully stateless. It requires the base dataset CSV to be provisioned on the Atena server, mounted into the container via Docker volume (`./data:/app/data`), at `data/base/simulation_security_labels_n-1.csv` (or at the path configured by `BASE_DATASET_LOCAL_PATH`). See deployment notes below.
 
 #### Request headers
 ```
