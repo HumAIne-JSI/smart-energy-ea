@@ -152,7 +152,15 @@ This uses default values from `RetrainRequest`, especially:
   "random_state": 42,
   "test_size": 0.2,
   "label_col": "status",
-  "drop_feature_cols": [],
+  "drop_feature_cols": [
+    "timestamp",
+    "max_line_loading_percent_basecase",
+    "min_bus_voltage_pu_basecase",
+    "max_bus_voltage_pu_basecase",
+    "max_line_loading_percent_contingency",
+    "min_bus_voltage_pu_contingency",
+    "max_bus_voltage_pu_contingency"
+  ],
   "drop_latest_columns": ["created_at"]
 }
 ```
@@ -168,7 +176,15 @@ Recommended explicit request JSON:
   "random_state": 42,
   "test_size": 0.2,
   "label_col": "status",
-  "drop_feature_cols": [],
+  "drop_feature_cols": [
+    "timestamp",
+    "max_line_loading_percent_basecase",
+    "min_bus_voltage_pu_basecase",
+    "max_bus_voltage_pu_basecase",
+    "max_line_loading_percent_contingency",
+    "min_bus_voltage_pu_contingency",
+    "max_bus_voltage_pu_contingency"
+  ],
   "drop_latest_columns": ["created_at"]
 }
 ```
@@ -283,7 +299,7 @@ Fields defined in `RetrainRequest`:
 | `random_state` | integer | `42` | Used in train/test split and RF model. |
 | `test_size` | float between 0 and 1 | `0.2` | Passed to `train_test_split`. |
 | `label_col` | string | `status` | Target column. |
-| `drop_feature_cols` | string list | `[]` | Dropped from features if present. |
+| `drop_feature_cols` | string list | `["timestamp", "max_line_loading_percent_basecase", ...]` | Columns excluded from feature matrix. Defaults exclude timestamp, post-simulation physical outputs (basecase and contingency line loading and voltages) which directly determine the label. Effective feature set: load_*, gen_*, sgen_* only. |
 | `drop_latest_columns` | string list | `["created_at"]` | Dropped from the merged dataset if present. |
 
 ### `al_strategy`

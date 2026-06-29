@@ -36,7 +36,23 @@ class RetrainRequest(BaseModel):
 
     # Dataset / feature handling
     label_col: str = Field(default="status", description="Name of the target label column.")
-    drop_feature_cols: List[str] = Field(default_factory=list, description="Columns to drop from X before training.")
+    drop_feature_cols: List[str] = Field(
+        default_factory=lambda: [
+            "timestamp",
+            "max_line_loading_percent_basecase",
+            "min_bus_voltage_pu_basecase",
+            "max_bus_voltage_pu_basecase",
+            "max_line_loading_percent_contingency",
+            "min_bus_voltage_pu_contingency",
+            "max_bus_voltage_pu_contingency",
+        ],
+        description=(
+            "Columns to exclude from the feature matrix before training. "
+            "Defaults exclude timestamp, post-simulation physical outputs, "
+            "and contingency values that directly determine the label. "
+            "Only load_*, gen_*, and sgen_* columns are used as features."
+        ),
+    )
     drop_latest_columns: List[str] = Field(
         default_factory=lambda: ["created_at"],
         description="Columns to drop from merged dataset (metadata columns).",

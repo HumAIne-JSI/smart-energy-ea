@@ -80,7 +80,15 @@ Use `latest_key` to point to the delta CSV (appended rows only) produced by the 
   "random_state": 42,
   "test_size": 0.2,
   "label_col": "status",
-  "drop_feature_cols": [],
+  "drop_feature_cols": [
+    "timestamp",
+    "max_line_loading_percent_basecase",
+    "min_bus_voltage_pu_basecase",
+    "max_bus_voltage_pu_basecase",
+    "max_line_loading_percent_contingency",
+    "min_bus_voltage_pu_contingency",
+    "max_bus_voltage_pu_contingency"
+  ],
   "drop_latest_columns": ["created_at"]
 }
 ```
