@@ -20,6 +20,11 @@ It is **not** an official production deployment.
 
 ---
 
+📍 **Current project status:** see [STATUS.md](STATUS.md) — updated
+after each milestone.
+
+---
+
 ## Quickstart
 
 The fastest way to run the project locally:
@@ -74,13 +79,17 @@ smart-energy-ea/
 ├── retraining-api/ # FastAPI retraining service (deployed on Atena)
 │   └── app/        # API source: main.py, schemas, train, MinIO IO
 ├── src/            # Core logic, experiments, dashboards
-├── notebooks/      # Exploratory and analysis notebooks
+├── notebooks/      # Exploratory and analysis notebooks, incl. SiKDD
+│                   # paper analyses (temporal split evaluation,
+│                   # feature importance, SHAP)
 ├── data/           # Input datasets & digital twin definitions
 ├── tables/         # Experiment outputs (CSV/XLSX)
 ├── figures/        # Generated plots
 ├── reports/        # Historical interim reports and architecture notes. Not actively maintained.
 ├── docs/           # Project documentation (see docs/INDEX.md)
 ├── powershell/     # Historical Windows experiment runner scripts. Paths reference old layout and may not work.
+├── Makefile        # Quickstart targets: run-api, run-dashboard, al-online
+├── STATUS.md       # Current project state snapshot
 └── README.md
 ```
 
@@ -98,7 +107,7 @@ smart-energy-ea/
   → `docs/active-learning-project-guide.md`
 
 - **System architecture & workflow** — component map and message flow  
-  → `docs/architecture.md` + `docs/sequence-current.md`
+  → `docs/architecture.md`
 
 - **Dataset description** — features, labels, data generation pipeline  
   → `docs/smart-energy-data-description.md`
