@@ -1,5 +1,5 @@
 # Project Status
-> Last updated: 2026-07-02 — refreshed after each milestone.
+> Last updated: 2026-07-15 — refreshed after each milestone.
 > For full docs navigation see [docs/INDEX.md](docs/INDEX.md).
 
 ## What this project is
@@ -9,15 +9,20 @@ a Digital Twin provides ground-truth labels through N-1 simulation, and
 a Random Forest model is retrained via a deployed API.
 
 ## Where we are now
-Iteration 2 design phase: defining a backend-ranking workflow for the 24
-day-ahead samples. Waiting for UBITECH to respond to the
-Iteration 2 proposal. In parallel: SiKDD paper
-sections are in progress, and HCI/XAI evaluation design is in progress
-with internal partners.
+Iteration 2 implementation phase: the backend-ranking workflow was
+finalized in a 2026-07-15 call with UBITECH (Kostas). JSI is implementing
+a new `/rank` endpoint and a `model_latest.joblib` upload on `/retrain`,
+targeting 2026-07-21. UBITECH is verifying production deployment of
+`al_strategy` and will build the ranked-list frontend the week of
+2026-07-27. SiKDD paper work continues in parallel, with a hard
+wrap-up deadline of end of July.
 
 ## Deployed and working (Iteration 1)
 - Retraining API running on Atena (Docker image
-  `leskovecg/smart-energy-api:1.6.0`, deployed 2026-06-29).
+  `leskovecg/smart-energy-api:1.7.0`, deployed 2026-06-29).
+- `al_strategy` metadata field (Phase 1) verified 2026-07-03 with a live
+  retrain run: recorded in `retrain_log.jsonl`, echoed in the response,
+  patched into `metrics.json`.
 - MinIO-based appended-rows delta workflow for dataset updates.
 - Random Forest model trained on 265 features (`load_*`, `gen_*`,
   `sgen_*`), following the 2026-06-29 data leakage fix.
@@ -28,13 +33,25 @@ with internal partners.
 - Temporal split analysis: accuracy=0.909, recall_insecure=0.838 — a
   more realistic estimate that motivates continual AL retraining.
 
+## Agreed for Iteration 2 (implementing now)
+- `/rank` endpoint contract agreed with UBITECH: dashboard sends 24
+  candidates + chosen AL strategy; backend returns each candidate's
+  rank and `al_score` (no threshold, no `p_insecure`).
+- Fix for the broken model loop: `/retrain` will also upload to a fixed
+  key, `model_latest.joblib`, so the dashboard always serves the latest
+  retrained model instead of a stale manually-uploaded one.
+- Timeline: JSI backend by 2026-07-21; UBITECH frontend week of
+  2026-07-27.
+
 ## In progress / blocked
 - SiKDD paper: Results, Figures/tables, System-level evaluation
   sections.
-- Blocked on UBITECH: response to the Iteration 2 proposal
-  (candidate delivery method, ranked-list display, Digital Twin
-  metadata, raw input source and feature groups).
-- Blocked on IJS: HCI/XAI evaluation input. 
+- Waiting on UBITECH: confirmation that `al_strategy` is deployed to
+  the production VM (target 2026-07-21).
+- Waiting on UBITECH: frontend work for the ranked list and
+  `model_latest` switch (week of 2026-07-27).
+- Waiting on IJS (Jože/Ivana): timeline for the HCI/XAI evaluation
+  section draft.
 
 ## If you are new here, read in this order
 1. This file
