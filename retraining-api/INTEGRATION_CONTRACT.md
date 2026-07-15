@@ -89,9 +89,25 @@ Use `latest_key` to point to the delta CSV (appended rows only) produced by the 
     "min_bus_voltage_pu_contingency",
     "max_bus_voltage_pu_contingency"
   ],
-  "drop_latest_columns": ["created_at"]
+  "drop_latest_columns": ["created_at"],
+  "al_strategy": "entropy"
 }
 ```
+
+#### Optional field: `al_strategy`
+
+`al_strategy` (string, optional) records which active-learning strategy the
+dashboard used to select the samples in this request. Allowed values:
+`"entropy"`, `"uncertainty"`, `"margin"`, `"random"`. Any other value
+returns **422 Unprocessable Entity** listing the allowed values.
+
+**Phase 1 semantics (current):** metadata only. If omitted, it defaults to
+`null` and behavior is identical to before this field existed (fully
+backward compatible with dashboards that do not send it). The value is
+stored in `data/retrain_log.jsonl` and in the uploaded `metrics.json`, and
+echoed back in the response — it does **not** influence which samples are
+selected or how the model is trained. The operator still selects points
+manually; strategy-based ranking is planned for Iteration 2.
 
 ---
 
@@ -138,6 +154,7 @@ Use `latest_key` to point to the delta CSV (appended rows only) produced by the 
 | `model_object` | str | Full MinIO path to the uploaded `model.joblib` artifact |
 | `metrics_object` | str | Full MinIO path to the uploaded `metrics.json` artifact |
 | `metrics` | object | Training and evaluation statistics; see sub-fields below |
+| `al_strategy` | str\|null | Echoes the request's `al_strategy` value; `null` if not provided. Phase 1: metadata only, no effect on training |
 
 #### `metrics` sub-fields
 

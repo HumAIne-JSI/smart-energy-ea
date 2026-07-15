@@ -132,6 +132,8 @@ def retrain(req: RetrainRequest) -> RetrainResponse:
             # Keep metrics semantics: latest rows now represent appended rows.
             artifacts.n_rows_latest = appended_rows_count
             artifacts.metrics["n_rows_latest"] = appended_rows_count
+            # Phase 1: al_strategy is metadata only, does not affect training.
+            artifacts.metrics["al_strategy"] = req.al_strategy
             with open(metrics_path, "w", encoding="utf-8") as f:
                 json.dump(artifacts.metrics, f, indent=2)
         except Exception as e:
@@ -159,6 +161,7 @@ def retrain(req: RetrainRequest) -> RetrainResponse:
                 "label_col": req.label_col,
                 "drop_feature_cols": req.drop_feature_cols,
                 "drop_latest_columns": req.drop_latest_columns,
+                "al_strategy": req.al_strategy,
             },
             "response": {
                 "ok": True,
@@ -183,4 +186,5 @@ def retrain(req: RetrainRequest) -> RetrainResponse:
             model_object=f"{req.results_bucket}/{model_key}",
             metrics_object=f"{req.results_bucket}/{metrics_key}",
             metrics=artifacts.metrics,
+            al_strategy=req.al_strategy,
         )

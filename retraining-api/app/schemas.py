@@ -4,7 +4,7 @@ Pydantic schemas for the Smart Energy retraining API.
 
 from __future__ import annotations
 
-from typing import Any, Dict, List
+from typing import Any, Dict, List, Literal, Optional
 
 from pydantic import BaseModel, Field
 
@@ -58,6 +58,16 @@ class RetrainRequest(BaseModel):
         description="Columns to drop from merged dataset (metadata columns).",
     )
 
+    # Active learning strategy (Phase 1: metadata only, does not affect training)
+    al_strategy: Optional[Literal["entropy", "uncertainty", "margin", "random"]] = Field(
+        default=None,
+        description=(
+            "Active learning strategy used by the dashboard to select samples. "
+            "Phase 1: stored as metadata only (retrain_log.jsonl, metrics, response echo); "
+            "does not influence sample selection or training in this API."
+        ),
+    )
+
 
 class RetrainResponse(BaseModel):
     ok: bool
@@ -70,3 +80,5 @@ class RetrainResponse(BaseModel):
     metrics_object: str
 
     metrics: Dict[str, Any]
+
+    al_strategy: Optional[Literal["entropy", "uncertainty", "margin", "random"]] = None

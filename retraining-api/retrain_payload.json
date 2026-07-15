@@ -15,6 +15,7 @@
     "min_bus_voltage_pu_contingency",
     "max_bus_voltage_pu_contingency"
   ],
-  "drop_latest_columns": ["created_at"]
+  "drop_latest_columns": ["created_at"],
+  "al_strategy": "entropy"
 }
 

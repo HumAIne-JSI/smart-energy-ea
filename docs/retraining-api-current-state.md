@@ -304,9 +304,9 @@ Fields defined in `RetrainRequest`:
 
 ### `al_strategy`
 
-**Phase 1 status (decision 2026-06-22):** `al_strategy` is being added to `RetrainRequest` as a metadata field for tracking purposes. Supported values: `entropy`, `uncertainty`, `margin`, `random`. In Phase 1 the field is stored as retraining metadata only and does not influence which samples are selected — the operator still selects points manually in the dashboard. The code change is tracked in the active sprint in `project_tracker.md`.
+**Phase 1 status (implemented 2026-07-03, decision 2026-06-22):** `al_strategy` is an optional field on `RetrainRequest`. Supported values: `entropy`, `uncertainty`, `margin`, `random`; any other value returns 422. It is stored in `data/retrain_log.jsonl`, included in the uploaded `metrics.json`, and echoed back in the response's `al_strategy` field. In Phase 1 the field is metadata only and does not influence which samples are selected — the operator still selects points manually in the dashboard. Full strategy-based ranking is Iteration 2.
 
-Prior to the Phase 1 update: the field was not defined in `RetrainRequest` and was silently ignored by Pydantic's default extra-field handling if sent.
+The field is optional and defaults to `null`; requests that omit it (as the currently deployed dashboard does) behave exactly as before.
 
 ## 6. Datasets and Files Read/Written
 
@@ -517,8 +517,8 @@ The architecture sketch says the dashboard implements active-learning strategy s
    - It tries three download endpoint variants.
    - The comments suggest some uncertainty about which endpoint is correct.
 
-9. No implemented AL/XAI workflow in this service.
-   - The API currently retrains after samples already exist in MinIO. It does not choose or explain samples.
+9. No implemented AL ranking/selection workflow in this service.
+   - The API currently retrains after samples already exist in MinIO. It does not choose or explain samples. `al_strategy` (Phase 1, implemented 2026-07-03) is recorded as metadata only; ranking/selection remains Iteration 2.
 
 ### Questions for Costas
 
